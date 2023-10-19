@@ -101,7 +101,6 @@ module Darebee
     getDates.each do |i|
       date=@@start+i
       Thread.new { scrape_image("https://darebee.com/images/exercise/#{date.year}/#{date.strftime("%B").downcase}#{date.day}.gif") }
-      #url="https://darebee.com/daily/#{date.strftime("%B").downcase}-#{date.day}-#{date.year}"
       p date
       p date.to_s
       #img_url="https://darebee.com/images/exercise/#{date.year}/#{date.strftime("%B").downcase}#{date.day}.gif"
