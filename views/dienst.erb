@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dienst</title>
+  <link rel="stylesheet" type="text/css" href="/dienstStyle.css">
+</head>
+<body>
+    <div id="content1">
+      <img 
+      src="/random_image"
+      alt="Image#" 
+      style="max-width: 100vw; max-height: 100vh; object-fit: contain;"
+      >
+    </div>
+    
+    <div id="content2" style="display: none;">
+      <%require 'yaml'
+        require 'date'
+
+          dat=File.readlines('../../../Documents/Dienst/planung.dat') ||
+          File.readlines('planung.dat')
+        
+        d=Date.new(*dat.shift.split(?,).map(&:to_i)) 
+        off=(d.wday+6)%7
+        s="e"*off
+        
+        dat.each{|l| s+=l.split.first if "fs-"[l[0]]}
+        
+        file = File.open("planung.template", "rb")
+        c = file.read
+        
+        rep = {
+              'f' => '<td height="50" bgcolor="#FF0000">@F</td>',
+              's' => '<td height="50" bgcolor="#0000FF">@S</td>',
+              '-' => '<td height="50" bgcolor="#00FF00">@&#12484;</td>',
+              'e' => '<td height="50" bgcolor="#DDDDDD"></td>'}
+        
+        t="<tr>"
+        s.size.times do |p|
+          e=d+(p-off)
+          t+=rep[s[p]].gsub('@',"#{e.mday}.#{e.mon}.&nbsp;&nbsp;&nbsp;&nbsp;")
+          if p%7==6 then t+="</tr><tr>";cnt=0 end
+        end
+        
+        @dienstOutput=c.sub("@@@",t)
+      %>
+
+      <%= @dienstOutput %>
+    </div>
+    
+    <script>
+        var content1 = document.getElementById("content1");
+        var content2 = document.getElementById("content2");
+        var image = document.querySelector("#content1 img");
+
+        document.addEventListener("click", function() {
+          if (content1.style.display === "none") {
+            content1.style.display = "block";
+            content2.style.display = "none";
+          } else {
+            content1.style.display = "none";
+            content2.style.display = "block";
+            changeImage();
+            setTimeout(switchToContent1, 5 * 60 * 1000); // 5 minutes in milliseconds
+          }
+        });
+
+        function changeImage() {
+          var imageUrl = "/random_image";
+          image.src = imageUrl;
+        }
+
+        function switchToContent1() {
+          content1.style.display = "block";
+          content2.style.display = "none";
+        }
+
+    </script>
+
+</body>
+</html>

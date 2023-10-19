@@ -1,0 +1,60 @@
+<html>
+<head>
+   <link rel="stylesheet" type="text/css" href="/dienstStyle.css">
+</head>
+<body>
+  <%# <p id="dienst">Dienst</p> %>
+<script>
+  
+  <%require 'yaml'
+    require 'date'
+
+    @picfilename = File.basename(Dir.glob("/toshiba/coding/sinatra/personal/public/pic/*.jpg").sample)
+
+    dat=File.readlines('../../../Documents/Dienst/planung.dat') ||
+        File.readlines('planung.dat')
+    
+    d=Date.new(*dat.shift.split(?,).map(&:to_i)) 
+    off=(d.wday+6)%7
+    s="e"*off
+    
+    dat.each{|l| s+=l.split.first if "fs-"[l[0]]}
+    
+    file = File.open("planung.template", "rb")
+    c = file.read
+    
+    rep = {
+          'f' => '<td height="50" bgcolor="#FF0000">@F</td>',
+          's' => '<td height="50" bgcolor="#0000FF">@S</td>',
+          '-' => '<td height="50" bgcolor="#00FF00">@&#12484;</td>',
+          'e' => '<td height="50" bgcolor="#DDDDDD"></td>'}
+    
+    t="<tr>"
+    s.size.times do |p|
+      e=d+(p-off)
+      t+=rep[s[p]].gsub('@',"#{e.mday}.#{e.mon}.&nbsp;&nbsp;&nbsp;&nbsp;")
+      if p%7==6 then t+="</tr><tr>";cnt=0 end
+    end
+    
+    @dienstOutput=c.sub("@@@",t)
+  %>
+
+  </script>
+  <%# <img src="/pic/<%=@picfilename%>"  %>
+    style="max-width: 60vw;
+    max-height: 60vh;
+    width: auto;
+    height: auto;
+    border: 11px solid black;
+    border-style: double;" />
+
+<br>
+
+  <%= @dienstOutput %>
+</body>
+</html
+
+    
+
+  end
+end

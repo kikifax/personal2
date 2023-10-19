@@ -1,0 +1,145 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #0b1a25; /* Blue color */
+}
+
+/* Base styles for buttonContainer and imageContainer */
+#buttonContainer {
+  display: flex;
+  flex-wrap: wrap; /* Allow elements to wrap to the next line when there's not enough space */
+  justify-content: center; /* Initially, elements float to the left */
+  width: 20%; /* Take up the full width of the parent container */
+  background-color: #0b1a25;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+#buttonContainer.center-align {
+  justify-content: center; /* Center-align elements when the center-align class is applied */
+}
+
+#imageContainer {
+  font-size: 26px;
+  color: #facbcb;  
+  display: flex;
+  flex-wrap: wrap; /* Allow elements to wrap to the next line when there's not enough space */
+  justify-content: center; /* Initially, elements float to the left */
+  width: 80%; /* Take up 80% of width by default */
+  height: 80%; /* Take up 80% of height when vertically aligned */
+  background-color: #0b1a25;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+#imageContainer.center-align {
+  justify-content: center; /* Center-align elements when the center-align class is applied */
+}
+
+
+/* Flex container to align horizontally by default */
+#container {
+  display: flex;
+  flex-direction: row;
+}
+
+/* Media query for screens with a height greater than width */
+@media (orientation: portrait) {
+  #container {
+    flex-direction: column;
+  }
+
+  #buttonContainer {
+    width: 100%; /* Full width in portrait orientation */
+    height: 20%; /* 20% of height when vertically aligned */ 
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;    
+    justify-content: space-between;
+  }
+
+  #imageContainer {
+    font-size: 26px;
+    color: #facbcb;      
+    width: 100%; /* Full width in portrait orientation */
+    height: 80%; /* 80% of height when vertically aligned */
+    display: flex;
+    flex-direction: column;    
+    align-items: center;
+    justify-content: center    
+  }
+}
+
+
+.dateButton {
+  display: flex;
+  flex-grow: 1; /* Add this line */
+  padding: 5px 10px;
+  background-color: #24689b;
+  color: #fff;
+  border: 1px solid #121029;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  text-align: center;
+  font-size: 1.5em; 
+  font-family: Palatino, serif;
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  align-items: center; 
+  justify-content: center;
+}
+
+
+
+
+
+.dateButton:hover {
+  background-color: #2980b9;
+}
+
+.dateButton.active {
+  background-color: #e74c3c;
+  border: 1px solid #c0392b;
+}
+
+.doneButton {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 20px;
+  min-width: 150px; /* Increase the minimum width */
+  min-height: 50px; /* Increase the minimum height */  
+  background: linear-gradient(45deg, #FF416C, #FF4B2B);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 25px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+.doneButton:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(45deg, #FF4B2B, #FF416C);
+}
+
+.dateSpan {
+  background: linear-gradient(to right, #D4AF37 0%, #A0522D 100%);
+  border: 2px solid #A0522D;
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  margin-right: 50px;
+  margin-bottom: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
+}

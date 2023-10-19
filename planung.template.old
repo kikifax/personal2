@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+    width:100%;
+}
+th, td {
+    padding: 5px;
+    text-align: center;
+}
+table#t01 th {
+    background-color: black;
+    color: white;
+}
+</style>
+</head>
+<body>
+
+
+<table id="t01">
+  <tr>
+    <th>Montag</th>
+    <th>Dienstag</th>
+    <th>Mittwoch</th>
+    <th>Donnerstag</th>
+    <th>Freitag</th>
+    <th>Samstag</th>
+    <th>Sonntag</th>
+
+  </tr>
+@@@
+</table>
+
+</body>
+</html>

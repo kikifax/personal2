@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Übungen</title>
+  <link rel="stylesheet" type="text/css" href="/darebeeStyle.css">
+  <link rel="icon" href="/darebee.ico" type="image/x-icon">
+</head>
+<body>
+  <% 
+    load __dir__+"/darebee.rb"
+    request.url=~/darebee(\d?)/
+    Darebee.setInstance($1)
+    #Darebee.loadDates
+  %>
+
+<div id="container">
+  <div id="buttonContainer">
+    <%= Darebee.getButtons %>
+  </div>
+
+  <div id="imageContainer">
+  </div>
+</div>
+
+
+  <script>
+    function dateFunc(y,m,d) { //dateButton has been pressed, load darebee page
+      console.log("dateFunc");
+      //console.log(y+m+d);
+      url=`https://darebee.com/daily/${m}-${d}-${y}`;
+      console.log(url);
+      cont=document.getElementById("imageContainer")
+      cont.innerHTML=""
+      
+      cont.innerHTML +="<span>"
+      cont.innerHTML += `<span class="dateSpan"><%= Darebee.numExString%></span>`;
+      cont.innerHTML += `<span class="dateSpan">${d+"."+m.charAt(0).toUpperCase() + m.slice(1)+" "+y}</span>`;
+      cont.innerHTML +="</span>"
+
+      cont.innerHTML += `<br><img src="/darebee/${y}${m}${d}.gif" style="width:100%; height:100%;">`
+
+
+      cont.innerHTML +=`<br><br><button class=\"doneButton\" onclick=\"doneFunc('${y}-${m}-${d}')\">Erledigt!</button>\n`
+      
+      //window.location.href='https://darebee.com/daily/september-28-2023'
+
+    }
+
+    function doneFunc(date) {
+      console.log('Button clicked with date:', date);
+      
+      // Make an AJAX request to the server-side function
+      fetch('/darebee_done', {
+        method: 'POST', // You should use the appropriate HTTP method (GET, POST, etc.) here
+        headers: {
+          'Content-Type': 'application/json', // Set the content type if needed
+        },
+        body: JSON.stringify({ date: date }), // Send data to the server if needed
+      })
+      .then(response => {
+        if (response.ok) {
+          // Handle a successful response from the server
+          return response.json();
+        } else {
+          // Handle errors here
+          console.error('Error:', response.status);
+        }
+      })
+      .then(data => {
+        // Handle the response data from the server here
+        console.log('Server response:', data);
+      })
+      .catch(error => {
+        // Handle any network or other errors here
+        console.error('Fetch error:', error);
+      });
+
+      window.location.reload();
+    }
+
+    window.onload = function () {
+      setTimeout(function() {
+        document.querySelector('.dateButton').click();
+      }, 1000);
+    };
+
+  </script>
+
+
+</body>
+</html>
